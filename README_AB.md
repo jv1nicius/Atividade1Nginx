@@ -25,3 +25,11 @@ _Exemplo realizando com tempo ao invés de total de requisições e com 20 conex
 ```
 ab -t 15 -c 20 http://localhost:84/
 ```
+## Teste com container para apache bench
+Com a sua aplicação rodando, rode o seguinte código:
+```
+docker run -it --rm \ --add-host=host.docker.internal:host-gateway \
+  httpd:2.4-alpine \
+  ab -n 1000 -c 10 http://host.docker.internal:84/
+```
+O código acima utiliza uma imagem docker que possui o apache bench instalado para realizar o teste. Utilizamos também o `--add-host=host.docker.internal:host-gateway \` para que o container possa visualizar e acessar o localhost da máquina host, por fim temos o mesmo padrão de comando de teste `ab -n 1000 -c 10 http://host.docker.internal:84/`.
